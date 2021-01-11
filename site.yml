@@ -1,0 +1,51 @@
+- hosts: bastion
+  become: true
+  tasks:
+    - name: Copy ssh key
+      copy:
+        src: tenpo-cl-dev-kp
+        dest: .ssh/tenpo-cl-dev-kp
+
+- hosts: database:web
+  become: true
+  roles:
+    - docker
+- hosts: database
+  become: true
+  tasks:
+    - include_vars: postgres_vars.yml
+    - name: Create a data container
+      community.general.docker_container:
+        name: postgres-db 
+        image: postgres:11
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_USER: "{{ postgres_user }}"
+          POSTGRES_PASSWORD: "{{ postgres_pasword }}"
+          POSTGRES_DB: "{{ postgres_db }}"
+
+
+- hosts: web 
+  become: true
+  tasks:
+    - include_vars: api_vars.yml
+    - name: Create api container
+      community.general.docker_container:
+        name: api 
+        image: fabian818/sum-api-nodejs:1.0.6
+        ports:
+          - "80:8080"
+        env:
+          DB_USERNAME: "{{ db_username }}"
+          DB_PASSWORD: "{{ db_password }}"
+          DB_DATABASE: "{{ db_database }}"
+          DB_HOST: "{{ db_host }}"
+          CRYPTO_KEY: "{{ crypto_key }}"
+    - name: Wait for port api accept connections
+      wait_for:
+        port: 80
+        delay: 10
+    - name: Execute migrations
+      command: docker exec api npm run migrate
+

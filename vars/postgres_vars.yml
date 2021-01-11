@@ -1,0 +1,4 @@
+---
+postgres_user: tenpo_user
+postgres_pasword: tenpo_password
+postgres_db: tenpo_db

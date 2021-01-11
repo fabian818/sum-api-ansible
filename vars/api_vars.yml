@@ -1,0 +1,7 @@
+---
+db_username: "tenpo_user" 
+db_password: "tenpo_password"
+db_database: "tenpo_db"
+db_host: "192.168.20.12"
+crypto_key: "6064514c9b743096a8fe56e8379c0507"
+

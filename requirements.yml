@@ -1,0 +1,3 @@
+# Install a role from GitHub
+- name: ansible-docker-postgres 
+  src: https://github.com/Yoctol/ansible-docker-postgres

@@ -1,0 +1,8 @@
+[bastion]
+34.239.252.72 ansible_ssh_user=ubuntu
+
+[web]
+192.168.20.11 ansible_ssh_user=ubuntu ansible_ssh_common_args='-o ProxyCommand="ssh -i ~/.ssh/tenpo-cl-dev-kp -W %h:%p ubuntu@34.239.252.72"'
+
+[database]
+192.168.20.12 ansible_ssh_user=ubuntu ansible_ssh_common_args='-o ProxyCommand="ssh -i ~/.ssh/tenpo-cl-dev-kp -W %h:%p ubuntu@34.239.252.72"'
