@@ -12,6 +12,7 @@ Ansible
 
 ### Installing
 
+Put the private key tenpo-cl-dev-kp in the root of the project.
 Get the bastion ip from the output of [Sum Api Terraform](https://github.com/fabian818/sum-api-terraform) and modify the 
 `hosts` file.
 
